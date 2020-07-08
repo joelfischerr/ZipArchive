@@ -31,7 +31,8 @@ int twentyMB = 20 * 1024 * 1024;
 
 - (void)tearDown {
     [super tearDown];
-    [[NSFileManager defaultManager] removeItemAtPath:[self _cachesPath:nil] error:nil];
+//    [[NSFileManager defaultManager] removeItemAtPath:[self _cachesPath:nil] error:nil];
+    NSLog(@"Cachepath is: %@", [self _cachesPath:nil]);
 }
 
 
@@ -641,7 +642,7 @@ int twentyMB = 20 * 1024 * 1024;
     int iterations = 300;
     NSString *unpackPath = [self _cachesPath:@"Unpacked/testFile"];
     NSString *filenName = @"TestFile.zip";
-    NSString *filePath = [NSString stringWithFormat:@"%@%@", [self _cachesPath:@""], filenName];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", [self _cachesPath:@""], filenName];
     NSString *password = @"TestPw";
 
     NSArray *compressionLevels = [NSArray arrayWithObjects:
@@ -658,7 +659,7 @@ int twentyMB = 20 * 1024 * 1024;
 
         for (int i = 0; i < iterations; i++) {
             NSString *fileName = [NSString stringWithFormat:@"File_%i", i];
-            [archive writeData:data filename:fileName compressionLevel:compressionLevel.floatValue password:password AES:true];
+            [archive writeData:data filename:fileName compressionLevel:compressionLevel.floatValue password:password AES:false];
         }
 
         bool close = [archive close];
